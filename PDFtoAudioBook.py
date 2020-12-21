@@ -8,11 +8,13 @@ page_count = reader.numPages
 print(f'number of pages is: {page_count-1}')
 
 speaker = pyttsx3.init()
-speaker.setProperty('rate', 180)
 
 
-print(f" Type 'entire' if you want the entire pdf to be read. Otherwise type the page number you want read")
+print(f"Type 'entire' if you want the entire pdf to be read. Otherwise type the page number you want read")
 pagesToRead = input('Your Choice: ')
+
+WPM = input(f"How many words per minute(WPM) do you want the PDF to be read at (recommended 160-200): ")
+speaker.setProperty('rate', WPM)
 
 if pagesToRead == 'entire':
 
