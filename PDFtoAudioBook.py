@@ -2,19 +2,19 @@ import PyPDF2
 import pyttsx3
 
 def words_per_minute():
+
     WPM = int(input(f"How many words per minute(WPM) do you want the PDF to be read at (recommended 160-200): "))
     speaker.setProperty('rate', WPM)
 
 def replay():
 
     choice = input("Would you like to read more pages? Yes or No: ").lower()
-
     return choice == 'yes'
-
 
 print('Welcome to your personal PDF to AudioBook Converter! \n')
 
-# replace "Proposal" with any PDF, ask user for there file instead
+
+# replace "Proposal" with any PDF, and make sure pdf is within project folder
 engine = open('Proposal.pdf', 'rb')
 reader = PyPDF2.PdfFileReader(engine)
 page_count = reader.numPages
@@ -28,8 +28,7 @@ while True:
 
     if pagesToRead == 'entire':
 
-        WPM = int(input(f"How many words per minute(WPM) do you want the PDF to be read at (recommended 160-200): "))
-        speaker.setProperty('rate', WPM)
+        words_per_minute()
 
         for num in range(0, page_count):
             page = reader.getPage(num)
@@ -40,15 +39,15 @@ while True:
 
     elif pagesToRead == 'other':
 
-        print('If you want only 1 page to be read, enter that page. '
-              '\nIf you want a range of pages to be read, enter the first page number followed by a space then the last page number.')
+        print('\n*If you want only 1 page to be read, enter that page. '
+              '\n*If you want a range of pages to be read, enter the first page number followed by a space then the last page number.')
 
         try:
-            inp = list(map(int,input('Your Choice: \n').split()))
+            inp = list(map(int,input('Your Choice: ').split()))
 
             if inp[0] < 0 or inp[1] > page_count:
                 print("Sorry, these pages don't exist as they are not within the book.")
-                break
+                continue
 
             words_per_minute()
 
