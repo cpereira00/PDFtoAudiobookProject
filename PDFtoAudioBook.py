@@ -14,7 +14,7 @@ def replay():
 print('Welcome to your personal PDF to AudioBook Converter! \n')
 
 
-# replace "Proposal" with any PDF, and make sure pdf is within project folder
+# replace "Proposal" with any PDF, and make sure pdf is within project folder OR provide full file path
 engine = open('Proposal.pdf', 'rb')
 reader = PyPDF2.PdfFileReader(engine)
 page_count = reader.numPages
