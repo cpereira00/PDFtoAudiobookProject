@@ -1,21 +1,32 @@
 import PyPDF2
 import pyttsx3
+import sys
+
 
 def words_per_minute():
 
-    WPM = int(input(f"How many words per minute(WPM) do you want the PDF to be read at (recommended 160-200): "))
+    WPM = int(input(
+        f"How many words per minute(WPM) do you want the PDF to be read at (recommended 160-200): "))
     speaker.setProperty('rate', WPM)
+
 
 def replay():
 
     choice = input("Would you like to read more pages? Yes or No: ").lower()
     return choice == 'yes'
 
+
 print('Welcome to your personal PDF to AudioBook Converter! \n')
 
 
 # replace "Proposal" with any PDF, and make sure pdf is within project folder OR provide full file path
-engine = open('Proposal.pdf', 'rb')
+try:
+    engine = open(str(sys.argv[1]), 'rb')
+except:
+    print("Invalid file name")
+    exit()
+
+
 reader = PyPDF2.PdfFileReader(engine)
 page_count = reader.numPages
 print(f'The number of pages is: {page_count-1}')
@@ -36,17 +47,17 @@ while True:
             speaker.say(words)
             speaker.runAndWait()
 
-
     elif pagesToRead == 'other':
 
         print('\n*If you want only 1 page to be read, enter that page. '
               '\n*If you want a range of pages to be read, enter the first page number followed by a space then the last page number.')
 
         try:
-            inp = list(map(int,input('Your Choice: ').split()))
+            inp = list(map(int, input('Your Choice: ').split()))
 
             if inp[0] < 0 or inp[1] > page_count:
-                print("Sorry, these pages don't exist as they are not within the book.")
+                print(
+                    "Sorry, these pages don't exist as they are not within the book.")
                 continue
 
             words_per_minute()
@@ -70,9 +81,7 @@ while True:
         print('Oops, invalid input, try again. \n')
         continue
 
-
     if not replay():
         break
 
-
-print('Program Terminating, have a nice day!')
+    print('Program Terminating, have a nice day!')
